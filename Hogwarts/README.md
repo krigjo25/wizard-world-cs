@@ -1,8 +1,6 @@
 # Wizard World
-
-## Overview
 The project is not finished
-This is a Console project which was created in a 1:1  session with [martininn](https://github.com/martininn)
+This is a Console project which was created through multiple 1:1  session with [martininn](https://github.com/martininn)
 At [GetAcademy](https://getacademy.no)
 
 ## Wizard World Assignment
@@ -13,6 +11,7 @@ som er unike for hvordan de kan beskrives, eller hva de kan eie eller
 hva de kan gjøre.
 
 ## Eksempler
+
 ```text
 House: **huffelpuff**,**griffindor**, **slytherin**, **ravenclaw**
 Items: wand, owl, etc
@@ -24,6 +23,7 @@ hvilke items de har.
 
 Karakteren skal ha mulighet til å gå inn i en Magibutikk, der kan de
 kjøpe et dyr:
+
 ```text
 ugle, rotte eller en katt.
 ```
@@ -61,18 +61,32 @@ The application should print an introduction for the character.(Name,
 house, items)
 
 The Student should have the possibility to enter a MagicStore, where they
-can purchase a animal (Owl, rat or a cat) or purchase some items such as
-(phoenix wand, unicorn wand or a troll wand). To make this happend
-Create a own class which is the store and when the user is entering the
-store then give the user a menu with items the person can purchase.
+can purchase a animal 
+```text
+-   Owl, 
+-   Rat,
+-   Cat.
+```
+or purchase some items such as
+```text
+-   Phoenix Wand, 
+-   Unicorn Wand,
+-   Troll Wand.
+```
+To make this happend create a own class which is the store and when
+the user is entering the store then give the user a menu with items
+the person can purchase.
 
 The Character should have the possibility to do spells. Such as
-(Vingardium leviosa, Hocus pocus)
+```text
+-   Vingardium leviosa, 
+-   Hocus pocus.
+```
 
-If the Student has an Owl, they have the possibility to send a letter to
-another student. The student which receive the letter, receives the item
-in their Inventory, and the letter contains a message which the Student
-can read.
+If the Student has an Owl, they have the possibility to send a letter
+to another student. The student which receive the letter, receives the
+item in their Inventory, and the letter contains a message which the
+Student can read.
 
 ## Requirements
 - Visual Studio 2019 > / Rider 2020.3 >

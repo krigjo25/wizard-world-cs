@@ -1,19 +1,34 @@
+using System.Collections.Generic;
 namespace Hogwarts.lib;
 
 public class Student
 {
-    public string[] Animals { get; set; }
-    public string Name { get; set; }
-    public string _wand { get; set; }
+    private int _gold;
+    private string _name;
+    private string _wand;
+    private string _house;
+    
     public int Gold { get; set; }
-    public List<Item> Inventory { get; set; }
+    public string Name { get; set; }
+    public string Wand { get; set; }
 
-    public Student(string name, int gold)
+    public string House { get; set; }
+    
+    
+    // public readonly List<Animals> Animals { get; set; }
+    public List<Item> Inventory { get; set; }
+    
+
+    public Student(string name, int gold, string wand = "None", string inventory = "None")
     {
-        Gold = gold;
-        //Inventory = inventory;
-        Name = name;
+        
+        _name = name;
+        _gold = gold;
+        _wand = wand;
         Inventory = [];
+        //_house = School.SortingHat();
+        
+       
     }
 
     public void AddToInventory(Item obj)
