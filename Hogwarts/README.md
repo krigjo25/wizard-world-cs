@@ -88,7 +88,7 @@ can read.
 5. Done!
 
 ## License
-This application is under [The Unlicense](./LICENCE)
+This application is under [GNU v3.0](./LICENCE) read for more information
 
 ## Notes from the developer
 Created with love for programming, thanks for reading.

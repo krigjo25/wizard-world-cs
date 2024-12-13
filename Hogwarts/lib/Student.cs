@@ -8,45 +8,17 @@ public class Student
     public int Gold { get; set; }
     public List<Item> Inventory { get; set; }
 
-    public Student(string[] arg, string name, string wand, int gold)
+    public Student(string name, int gold)
     {
         Gold = gold;
-        Inventory = inventory;
+        //Inventory = inventory;
         Name = name;
-        _wand = wand;
-        Animals = arg;
+        Inventory = [];
     }
 
-    public void AddToInventory(Item obj )
+    public void AddToInventory(Item obj)
     {
         Inventory.Add(obj);
     }
-    
-}
-
-public class Item
-{
-    public string Name { get; set; }
-    public string Message { get; set; }
-    public string Description { get; set; }
-
-    public Item(string name,string description, string message = "")
-    {
-        Name = name;
-        Message = message;
-        Description = description;
-    }
-
-    public void SendMessage(string message, Student student)
-    {
-        
-        // Send Message
-    }
-
-    public void HealStudent(Student student, int hp)
-    {
-        
-    }
-    
     
 }
