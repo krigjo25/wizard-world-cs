@@ -11,12 +11,11 @@ public class Student
     public int Gold { get; set; }
     public string Name { get; set; }
     public string Wand { get; set; }
-
     public string House { get; set; }
     
     
     // public readonly List<Animals> Animals { get; set; }
-    public List<Item> Inventory { get; set; }
+    public List<IItems> Inventory { get; set; }
     
 
     public Student(string name, int gold, string wand = "None", string inventory = "None")
@@ -31,7 +30,7 @@ public class Student
        
     }
 
-    public void AddToInventory(Item obj)
+    public void AddToInventory(StoreItems obj)
     {
         Inventory.Add(obj);
     }

@@ -8,7 +8,6 @@ internal class ConsoleAPP
         //List<Griffindor> griffindors = new();
         //List<Slytherin> slytherin = new();
         //List<Ravenclaw> ravenclaw = new();
-        
         List<Student> students = [];
         
         var ms = new MagicStore();
@@ -17,7 +16,12 @@ internal class ConsoleAPP
         
         students.Add(pupil);
         
+        //  A console to do something
         
+        
+        
+        
+        // Print the student
         foreach (var student in students)
         {
             // Dette er et objekt
@@ -27,8 +31,8 @@ internal class ConsoleAPP
             Console.WriteLine(student.Gold);
             
         }
-
-        ms.PrintWelcomeMessage();
+        
+        ms.PrintWelcomeMessage(pupil);
 
     }
 }

@@ -3,12 +3,20 @@ namespace Hogwarts.lib;
 internal class MagicStore
 {
     string[] animals = ["Owl", "Rat"];
-    string[] misc = ["Animal", "Wizard Wand", "Misc", "Check out"];
+    string[] misc = ["Animal", "Wizard Wand", "Misc", "Check out", "Steal Item(s)"];
     string[] wands = ["unicorn wand", "troll wand", "phoenix wand"];
 
-    private List<string> ShoppingCart = [];
-    public void PrintWelcomeMessage()
+    private List<StoreItems> Items = [];
+    private List<StoreItems> ShoppingCart = [];
+    public void PrintWelcomeMessage(Student student)
     {
+        Items.Add(new StoreItems("Owl", "Animal", 25));
+        Items.Add(new StoreItems("Rat", "Animal", 10));
+        
+        Items.Add(new StoreItems("Unicorn wand", "wand", 30));
+        Items.Add(new StoreItems("Troll Wand", "wand", 45));
+        Items.Add(new StoreItems("Phoenix wand", "wand", 3000));
+        
         while (true)
         {
             Console.Clear();
@@ -20,7 +28,7 @@ internal class MagicStore
             }
             Console.WriteLine("Press ESC / q to exit");
             var input = Console.ReadKey();
-            
+
             // Ensures that the key pressed is ESC or Q
             if (input.Key is ConsoleKey.Escape or ConsoleKey.Q)
             {
@@ -36,26 +44,30 @@ internal class MagicStore
                     PrintMenu(animals);
                     break;
                 
-                case ConsoleKey.D2:
+                case ConsoleKey.D3:
                     Console.Clear();
                     Console.WriteLine("Here is our misc Items !");
                     
                     PrintMenu(misc);
                     break;
                 
-                case ConsoleKey.D3:
+                case ConsoleKey.D2:
                     Console.Clear();
                     Console.WriteLine("Here is our beautiful wands !");
-                    
                     PrintMenu(wands);
                     break;
                 
                 case ConsoleKey.D4:
                     Console.Clear();
-                    Console.WriteLine("Student is walking to the Check out point!");
+                    Console.WriteLine("Student walking towards the Check out point !");
                     
-                    Checkout();
-                    break;
+                    Checkout(student);
+                    return;
+                
+                case ConsoleKey.D5:
+                    Console.WriteLine("Student is walking towards the exit");
+                    StealItem(student);
+                    return;
                 
                 default:
                     continue;
@@ -63,16 +75,41 @@ internal class MagicStore
         }
     }
 
+    private void StealItem(Student student)
+    {
+        // Sucsess rate
+        // Ranomize a boolean value
+        Console.Clear();
+        
+        if(true)
+        {
+            Console.WriteLine("You stole your shopping cart !");
+            
+            foreach (var element in ShoppingCart)
+            {
+                student.Inventory.Add(element);
+            }
+            
+        }
+        else
+        {
+            //Console.WriteLine("You got dectected by the store Owner !");
+            //Console.WriteLine($" {student.House.proffesor} : {student.House} lost 200points !\nThis is not acceptable behavior !");
+            //student.House.Points -= 200;
+        }
+        Console.WriteLine("You went out of the store undetected !");
+    }
+
     private void PrintMenu(string[] arg)
     {
         while (true)
         {
-            for (int i = 0; i < arg.Length; i++)
+            foreach (var item in Items)
             {
-                Console.WriteLine($"Press {i+1} to add an {arg[i]} to the shoppingCart");
+                Console.WriteLine($"Press {Items.Count} to add an {item} to the shoppingCart");
             }
-            
             Console.WriteLine("Press ESC / q to exit");
+            
             var input = Console.ReadKey();
             
             // Ensures that the key pressed is ESC or Q
@@ -80,34 +117,28 @@ internal class MagicStore
             {
                 return;
             }
-            // Ensures that the pressed Key will be added to class
-            switch (input.Key)
+            // Add selected item to the Shopping cart
+            foreach (var element in Items.Where(i => i.Name == arg[(int)char.GetNumericValue(input.KeyChar) - 1]))
             {
-                case ConsoleKey.D1:
-                    ShoppingCart.Add(arg[1]);
-                    Console.Clear();
-                    break;
-                
-                case ConsoleKey.D2:
-                    ShoppingCart.Add(arg[(int) char.GetNumericValue(input.KeyChar)]);
-                    break;
-                
-                case ConsoleKey.D3:
-                    ShoppingCart.Add(arg[(int) char.GetNumericValue(input.KeyChar)]);
-                    break;
+                ShoppingCart.Add(element);
+                break;
             }
             
         }
     }
 
-    private void Checkout()
+    private void Checkout(Student student)
     {
         Console.Clear();
-        foreach (var item in ShoppingCart)
+        Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
+        
+        foreach (var element in ShoppingCart)
         {
-            Console.WriteLine(item);
+            if (student.Gold <= element.PurchasePrice)
+            {
+                student.Inventory.Add(element);
+            }
         }
         Console.WriteLine("Thank you for using the MagicStore !");
-        
     }
 }

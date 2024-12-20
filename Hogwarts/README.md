@@ -3,6 +3,33 @@ The project is not finished
 This is a Console project which was created through multiple 1:1  session with [martininn](https://github.com/martininn)
 At [GetAcademy](https://getacademy.no)
 
+
+## Requirements
+- Visual Studio 2019 > / Rider 2020.3 >
+- .NET Core 8.0
+
+## Installation
+1. Clone the repository
+2. ```shell
+   #  Using SSH
+   git@github.com:krigjo25/console-wizardworld-cs.git
+   
+   # Using Gti Client
+   gh repo clone krigjo25/console-wizardworld-cs
+   
+   #  Using the Terminal
+   git clone https://github.com/krigjo25/console-wizardWorld-cs
+   ```
+3. Open the project in Visual Studio / Ryder
+4. Run the project
+5. Done!
+
+### Example
+```txt
+
+```
+
+
 ## Wizard World Assignment
 
 ### Norwegian ( origninal)
@@ -102,7 +129,7 @@ Student can read.
 5. Done!
 
 ## License
-This application is under [GNU v3.0](./LICENCE) read for more information
+This application is under [GNU v.3](./LICENCE)
 
 ## Notes from the developer
 Created with love for programming, thanks for reading.
