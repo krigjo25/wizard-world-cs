@@ -14,7 +14,7 @@ At [GetAcademy](https://getacademy.no)
    #  Using SSH
    git@github.com:krigjo25/console-wizardworld-cs.git
    
-   # Using Gti Client
+   # Using Git Client
    gh repo clone krigjo25/console-wizardworld-cs
    
    #  Using the Terminal
