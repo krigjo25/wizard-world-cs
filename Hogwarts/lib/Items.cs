@@ -26,7 +26,6 @@ public class Items : IItems
     {
         Name = name;
         Type = type;
-        //Description = description;
         if (Sellable)
         {
             SellPrice = PurchasePrice / 2;
@@ -34,9 +33,8 @@ public class Items : IItems
         PurchasePrice = purchasePrice;
         
     }
+    
 }
-
-
 public class Animals : Items
 {
     protected Animals(string name, string type, string description, int purchasePrice, bool sellAble = true) : base(name, type, purchasePrice, sellAble)

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 namespace Hogwarts.lib;
 
-public class Student
+public class Wizard
 {
     private int _lvl;
     private int _gold;
@@ -22,7 +22,7 @@ public class Student
 
     
 
-    public Student(string name, int gold, string wand = "None", int lvl = 1)
+    public Wizard(string name, int gold, string wand = "None", int lvl = 1)
     {
         _lvl = lvl;
         _name = name;
