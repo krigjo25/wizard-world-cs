@@ -2,10 +2,8 @@ namespace Hogwarts.lib;
 
 public interface ISpells
 {
-    public string Name;
     public string Type;
     
-    public string Unlock;
     public string Effect;
 }
 public class FireSpells : ISpells
@@ -28,22 +26,15 @@ public class FireSpells : ISpells
     
 }
 
-public class Spells : ISpells
 {
     // WaterSpells
 }
 
-public class CoreSpells : ISpells
 {
-    //  Corespells
 }
 
-public class StealthSpells : ISpells
 {
-    // StealthSpells
 }
 
-public class DarkArts : ISpells
 {
-    // Unforgivable curses
 }
