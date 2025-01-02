@@ -2,22 +2,20 @@ namespace Hogwarts.lib;
 
 internal class MagicStore
 {
-    string[] animals = ["Cat", "Owl", "Rat", "Toad"];
+    string[] animals = ["Owl", "Rat"];
     string[] misc = ["Animal", "Wizard Wand", "Misc", "Check out", "Steal Item(s)"];
     string[] wands = ["unicorn wand", "troll wand", "phoenix wand"];
 
     private List<StoreItems> Items = [];
     private List<StoreItems> ShoppingCart = [];
-    public void PrintWelcomeMessage(Student student)
+    public void PrintWelcomeMessage(Wizard wizard)
     {
-        Items.Add(new StoreItems("Cat", "Pet-Animal",25));
-        Items.Add(new StoreItems("Owl", "Pet-Animal", 10));
-        Items.Add(new StoreItems("Rat", "Pet-Animal", 10));
-        Items.Add(new StoreItems("Toad", "Pet-Animal", 10));
+        Items.Add(new StoreItems("Owl", "Animal", 25));
+        Items.Add(new StoreItems("Rat", "Animal", 10));
         
-        Items.Add(new StoreItems("Unicorn wand", "Wand", 30));
-        Items.Add(new StoreItems("Troll Wand", "Wand", 45));
-        Items.Add(new StoreItems("Phoenix wand", "Wand", 3000));
+        Items.Add(new StoreItems("Unicorn wand", "wand", 30));
+        Items.Add(new StoreItems("Troll Wand", "wand", 45));
+        Items.Add(new StoreItems("Phoenix wand", "wand", 3000));
         
         while (true)
         {
@@ -26,7 +24,7 @@ internal class MagicStore
             
             for (int i = 0; i < misc.Length; i++)
             {
-                Console.WriteLine(i % 3 == 0 || i % 4 == 0 ? $"Press {i + 1} to {misc[i]}." : $"Press {i + 1} to view  {misc[i]} Menu");
+                Console.WriteLine(i % 3 == 0 ? $"Press {i + 1} to {misc[i]}." : $"Press {i + 1} to view  {misc[i]} Menu");
             }
             Console.WriteLine("Press ESC / q to exit");
             var input = Console.ReadKey();
@@ -36,6 +34,7 @@ internal class MagicStore
             {
                 return;
             }
+            
             switch (input.Key)
             {
                 case ConsoleKey.D1:
@@ -62,12 +61,12 @@ internal class MagicStore
                     Console.Clear();
                     Console.WriteLine("Student walking towards the Check out point !");
                     
-                    Checkout(student);
+                    Checkout(wizard);
                     return;
                 
                 case ConsoleKey.D5:
                     Console.WriteLine("Student is walking towards the exit");
-                    StealItem(student);
+                    StealItem(wizard);
                     return;
                 
                 default:
@@ -76,9 +75,9 @@ internal class MagicStore
         }
     }
 
-    private void StealItem(Student student)
+    private void StealItem(Wizard wizard)
     {
-        // Initialize an algorithm to perform a theft based on lvl, x items + a multiplier
+        // Sucsess rate
         // Ranomize a boolean value
         Console.Clear();
         
@@ -88,7 +87,7 @@ internal class MagicStore
             
             foreach (var element in ShoppingCart)
             {
-                student.Inventory.Add(element);
+                wizard.Inventory.Add(element);
             }
             
         }
@@ -118,34 +117,27 @@ internal class MagicStore
             {
                 return;
             }
-            // Add selected item to the Shopping cart using LINQ expression
+            // Add selected item to the Shopping cart
             foreach (var element in Items.Where(i => i.Name == arg[(int)char.GetNumericValue(input.KeyChar) - 1]))
             {
                 ShoppingCart.Add(element);
-                foreach (var stu in student.Inventory)
-                {
-                    if (element == student.Inventory)
-                    {
-                        Console.WriteLine($"You realized you already have {element}");
-                        ShoppingCart.Remove(element);
-                    }
-                    
-                }
-                
                 break;
             }
             
         }
     }
 
-    private void Checkout(Student student)
+    private void Checkout(Wizard wizard)
     {
         Console.Clear();
         Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
         
-        foreach (var element in ShoppingCart.Where(element => student.Gold <= element.PurchasePrice))
+        foreach (var element in ShoppingCart)
         {
-            student.Inventory.Add(element);
+            if (wizard.Gold <= element.PurchasePrice)
+            {
+                wizard.Inventory.Add(element);
+            }
         }
         Console.WriteLine("Thank you for using the MagicStore !");
     }

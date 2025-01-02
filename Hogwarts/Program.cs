@@ -4,15 +4,12 @@ internal class ConsoleAPP
 {
     public static void Main(string[] args)
     {
-        //List<Huffelpuff> huffelpus = new();
-        //List<Griffindor> griffindors = new();
-        //List<Slytherin> slytherin = new();
-        //List<Ravenclaw> ravenclaw = new();
-        List<Student> students = [];
+ 
+        List<Wizard> students = [];
         
         var ms = new MagicStore();
         
-        var pupil = new Student( "Ronald Kolerius Wiltersen",1000);
+        var pupil = new Wizard( "Ronald Kolerius Wiltersen",1000);
         
         students.Add(pupil);
         
