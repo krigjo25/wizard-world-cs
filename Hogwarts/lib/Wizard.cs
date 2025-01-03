@@ -11,10 +11,12 @@ public class Wizard
     private Animals _animals = null;
     
     public int Gold { get; set; }
-    public string Name { get; set; }
-    public string Wand { get; set; }
-    public string House { get; set; }
+    public string Name { get; }
     public int Level { get; set; }
+    public object Wand { get; set; }
+    
+    public House House { get;}
+    
     
     
     // public readonly List<Animals> Animals { get; set; }
@@ -29,7 +31,7 @@ public class Wizard
         _gold = gold;
         _wand = wand;
         Inventory = [];
-        //_house = School.SortingHat();
+        _house = SortingHat.SortingHat();
         
     }
 

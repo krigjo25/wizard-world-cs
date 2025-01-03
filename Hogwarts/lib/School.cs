@@ -1,19 +1,21 @@
 namespace Hogwarts.lib;
 
-internal class School
+public class School
 {
-    internal readonly List<House> houses = [];
+    protected readonly List<House> houses = [];
 
-    private void InitalizeHouses()
+    public void InitializeHouse()
     {
-        houses.Add(new House("Slytherin", "Severus Snape.", HiddenWall));
-        houses.Add(new House("Hufflepuff", "Pomona Sprout", Barrel_Stable));
-        houses.Add(new House("Griffindoor", "Minerva McGonagall", The_Fat_Lay));
-        houses.Add(new House("Raven Claw", "Filius Flitwick.". Bronze_Eagle_Statue));
+        houses.Add(new House("Slytherin", "Severus Snape.", typeof(HiddenWall)));
+        houses.Add(new House("Hufflepuff", "Pomona Sprout", typeof(Barrel_Stable)));
+        houses.Add(new House("Griffindoor", "Minerva McGonagall", typeof(TheFatLady)));
+        houses.Add(new House("Raven Claw", "Filius Flitwick.",typeof(Bronze_Eagle_Statue)));
     }
+    
+    
 }
 
-internal class House : School
+public class House : School
 {
     private int _points = 0;
     private string _name = string.Empty;
@@ -36,5 +38,14 @@ internal class House : School
         Name = name;
         Head = head;
         Entrance = entrance;
+    }
+}
+
+public class SortingHat: School
+{
+
+    public static House SortingHat()
+    {
+        throw new NotImplementedException();
     }
 }

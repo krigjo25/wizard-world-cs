@@ -22,10 +22,12 @@ public class Items : IItems
     public int PurchasePrice { get; set; }
     public string Description { get; set; }
     
-    protected Items(string name, string type, int purchasePrice, bool sellAble = true)
+    protected Items(string name, string type, string description = "", int purchasePrice = 0, bool sellAble = false)
     {
         Name = name;
         Type = type;
+        Description = description;
+
         if (Sellable)
         {
             SellPrice = PurchasePrice / 2;
@@ -35,9 +37,10 @@ public class Items : IItems
     }
     
 }
+
 public class Animals : Items
 {
-    protected Animals(string name, string type, string description, int purchasePrice, bool sellAble = true) : base(name, type, purchasePrice, sellAble)
+    protected Animals(string name, string type, string description, int purchasePrice = 0, bool sellAble = true) : base(name, type, description, purchasePrice, sellAble)
     {
         
     }

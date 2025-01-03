@@ -4,7 +4,9 @@ internal class ConsoleAPP
 {
     public static void Main(string[] args)
     {
- 
+        // Initialize School
+        var school = new School();
+        school.InitializeHouse();
         List<Wizard> students = [];
         
         var ms = new MagicStore();
