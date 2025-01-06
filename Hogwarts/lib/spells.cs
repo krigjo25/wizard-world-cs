@@ -2,39 +2,30 @@ namespace Hogwarts.lib;
 
 public interface ISpells
 {
-    public string Type;
-    
-    public string Effect;
+    public string Type { get; set; }
+    public string Effect { get; set; }
 }
 public class FireSpells : ISpells
 {
-    public string Type;
-    public string Name;
+    private string _type;
+    private string _name;
+    private string _effect;
+    private string _damage;
+    private string _description;
     
-    public string Effect;
-    public string Damage;
-    public string Description;
+    public string Type { get; set; }
+    public string Name { get; set; }
+    public string Effect { get; set; }
+    public string Damage { get; set; }
+    public string Description { get; set; }
 
-    public FireSpells(string type, string name, string effect, string damage, string description)
+    public FireSpells(string name, string type, string effect, string damage, string description)
     {
-        Type = type;
-        Name = name;
-        Effect = effect;
-        Damage = damage;
-        Description = description;
+        _name = name;
+        _type = type;
+        _effect = effect;
+        _damage = damage;
+        _description = description;
     }
     
-}
-
-{
-    // WaterSpells
-}
-
-{
-}
-
-{
-}
-
-{
 }
