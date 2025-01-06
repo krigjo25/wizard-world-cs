@@ -1,3 +1,5 @@
+using System.Threading.Channels;
+
 namespace Hogwarts.lib;
 
 internal class MagicStore
@@ -6,16 +8,32 @@ internal class MagicStore
     string[] misc = ["Animal", "Wizard Wand", "Misc", "Check out", "Steal Item(s)"];
     string[] wands = ["unicorn wand", "troll wand", "phoenix wand"];
 
-    private List<StoreItems> Items = [];
-    private List<StoreItems> ShoppingCart = [];
+    private List<Items> Items = [];
+    private List<Items> ShoppingCart = [];
+    
+    public MagicStore()
+    {
+        InitializeProducts();
+    }
+
+    public void InitializeProducts()
+    {
+        // Available items in the store
+        Items.Add(new StoreItems("Cat", "Land", 30, "Owl", 1));
+        Items.Add(new StoreItems("Owl", "Flying", 50, "Rat", 1));
+        Items.Add(new StoreItems("Rat", "Land", 25, "Cat", 1));
+        Items.Add(new StoreItems("Toad", "Land/sea", 10, "Toad", 1));
+        
+        //  Available wands in the store
+        Items.Add(new StoreItems("Troll Wand", "Dark wand",45, "", 1));
+        Items.Add(new StoreItems("Unicorn wand", "Light, wand", 30, "", 1));
+        Items.Add(new StoreItems("Phoenix wand", "Fire wand", 3000, "", 1));
+        
+        // Available misc items in the store
+    }
     public void PrintWelcomeMessage(Wizard wizard)
     {
-        Items.Add(new StoreItems("Owl", "Animal", 25));
-        Items.Add(new StoreItems("Rat", "Animal", 10));
         
-        Items.Add(new StoreItems("Unicorn wand", "wand", 30));
-        Items.Add(new StoreItems("Troll Wand", "wand", 45));
-        Items.Add(new StoreItems("Phoenix wand", "wand", 3000));
         
         while (true)
         {
@@ -69,6 +87,11 @@ internal class MagicStore
                     StealItem(wizard);
                     return;
                 
+                case ConsoleKey.D6:
+                    Console.WriteLine("Student is walking towards the Checkout point !");
+                    SellItem(wizard);
+                    return;
+                
                 default:
                     continue;
             }
@@ -87,6 +110,7 @@ internal class MagicStore
             
             foreach (var element in ShoppingCart)
             {
+                
                 wizard.Inventory.Add(element);
             }
             
@@ -127,11 +151,45 @@ internal class MagicStore
         }
     }
 
+    private void SellItem(Wizard wizard)
+    {
+        const int sellprice = 30;
+        
+        Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
+        Console.WriteLine("What would you like to sell? !");
+        
+        Console.WriteLine("What would you like to sell?!");
+        Console.WriteLine("-s <name> to sell an item");
+        Console.WriteLine("-i to view your inventory");
+        
+        var input = Console.ReadLine();
+        
+        if (input == "-i")
+        {
+            wizard.PrintInventory();
+        }
+        else if (input.StartsWith("-s"))
+        {
+            var itemName = input.Split(" ")[1];
+            foreach (var element in wizard.Inventory.Where(i => i.Name == itemName))
+            {
+                
+                wizard.RemoveFromInventory(element);
+                wizard.Gold += element.Rarity * sellprice;
+            }
+        }
+        
+        foreach (var element in wizard.Inventory)
+        {
+        }
+    }
+    
     private void Checkout(Wizard wizard)
     {
         Console.Clear();
         Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
         
+        // Sell item to the Customer
         foreach (var element in ShoppingCart)
         {
             if (wizard.Gold <= element.PurchasePrice)
