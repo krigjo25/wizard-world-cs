@@ -5,34 +5,35 @@ namespace Hogwarts.lib;
 internal class MagicStore
 {
     string[] animals = ["Owl", "Rat", "Cat", "Toad"];
-    string[] misc = ["Animal", "Wizard Wand", "Misc", "Check out"];
+    string[] misc = ["Animal", "Wizard Wand", "Check out"];
     string[] wands = ["unicorn wand", "troll wand", "phoenix wand"];
 
     // List of items in the store
     private List<Wand> Wands = [];
-    public List<Animal> Animals = [];
-    public List<GeneralStore> Items = [];
-    public List<GeneralStore> ShoppingCart = [];
+    private List<Animal> Animals = [];
+
+    private List<GeneralStore> Items = [];
+    private List<GeneralStore> ShoppingCart { get; } = [];
+
     public MagicStore()
     {
         InitializeProducts();
+        Console.WriteLine("Initialized!");
     }
-
+    
     private void InitializeProducts()
     {
         
-        // Available Animals in the store
-        for (int i = 0; i < animals.Length; i++)
+        Animals.Add(new Animal("Flying", 1, "Aerial"));
+        Animals.Add(new Animal("Cat",  1));
+        Animals.Add(new Animal("Rat", 1));
+        Animals.Add(new Animal("Toad", 1));
+
+        foreach (var element in Animals)
         {
-            if (animals[i] == "Owl")
-            {
-                Animals.Add(new Animal(animals[i], "Flying", 1));
-            }
-            else
-            {
-                Animals.Add(new Animal(animals[i], "Land", 1 ));
-            }
+            Console.WriteLine($"Animal: {element.Name} Type: {element.Type} Rarity: {element.Rarity}");
         }
+
         
         for (int i = 0; i < wands.Length; i++)
         {
@@ -55,7 +56,11 @@ internal class MagicStore
         {
             Items.Add(new GeneralStore(CalculatePrice(element.Rarity, element.Type), element.Name, element.Type, element.Rarity));
         }
-        
+
+        foreach (var element in Items)
+        {
+            Console.WriteLine($"Item: {element.Name} Type: {element.Type} Rarity: {element.Rarity} Price: {element.PurchasePrice}");
+        }
         // Available misc items in the store
     }
     
@@ -96,37 +101,7 @@ internal class MagicStore
         }
         Console.WriteLine("Thank you for using the MagicStore !");
     }
-    private void PrintMenu(string[] arg)
-    {
-        while (true)
-        {
-            for (int i = 0; i < Items.Count; i++)
-            {
-                Console.WriteLine($"Press {i+1} to add an {Items[i].Name} to the shoppingCart");
-            }
-            foreach (var item in Items)
-            {
-                
-            }
-            Console.WriteLine("Press ESC / q to exit");
-            
-            var input = Console.ReadKey();
-            
-            // Ensures that the key pressed is ESC or Q
-            if (input.Key is ConsoleKey.Q or ConsoleKey.Escape)
-            {
-                return;
-            }
-            // Add selected item to the Shopping cart
-            foreach (var element in Items.Where(i => i.Name == arg[(int)char.GetNumericValue(input.KeyChar) - 1]))
-            {
-                ShoppingCart.Add(element);
-                break;
-            }
-            
-        }
-    }
-    
+
     private void SellItem(Wizard wizard)
     {
         Console.Clear();
@@ -212,12 +187,76 @@ internal class MagicStore
             return 0;
     }
 
+    private void PrintAnimalsMenu()
+    {
+        // Print the available items in the store
+        foreach (var element in Animals)
+        {
+            int index = 1;
+            //  Print the available animals in the store
+            Console.WriteLine($"Press {index} to add a(n) {element.Name} to the shoppingCart");
+
+            index++;
+        }
+
+        Console.WriteLine("Press ESC or Q to exit");
+        
+        // Prompt the user to select an option
+        var input = Console.ReadKey();
+        
+        // Ensures that the key pressed is ESC or Q
+        if (input.Key is ConsoleKey.Escape or ConsoleKey.Q ) return;
+        
+        // Ensures that the key pressed is a number
+        if (!int.TryParse(input.KeyChar.ToString(), out var n)) return;
+        
+        //  Converting the key pressed to an integer
+        var i  = int.Parse(input.KeyChar.ToString());
+            
+        // Add the selected item to the shopping cart
+        foreach (var element in Items.Where(element => element.Name == Animals[i].Name))
+        {
+            ShoppingCart.Add(element);
+        }
+
+        return;
+    }
+    private void PrintWandsMenu()
+    {
+        // Print the available items in the store
+        for (int index = 0; index < Animals.Count; index++)
+        {
+            Console.WriteLine($"Press {index+1} to add a(n) {Animals[index].Name} to the shoppingCart");
+        }
+
+        Console.WriteLine("Press ESC or Q to exit");
+        
+        // Prompt the user to select an option
+        var input = Console.ReadKey();
+        
+        // Ensures that the key pressed is ESC or Q
+        if (input.Key is ConsoleKey.Escape or ConsoleKey.Q ) return;
+        
+        // Ensures that the key pressed is a number
+        if (!int.TryParse(input.KeyChar.ToString(), out var n)) return;
+        
+        //  Converting the key pressed to an integer
+        var i  = int.Parse(input.KeyChar.ToString());
+            
+        // Add the selected item to the shopping cart
+        foreach (var element in Items.Where(element => element.Name == Animals[n].Name))
+        {
+            ShoppingCart.Add(element);
+        }
+
+        return;
+    }
     public void PrintWelcomeMessage(Wizard wizard)
     {
         
         while (true)
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("Welcome to the MagicStore !");
             
             // Print the available items in the store
@@ -245,26 +284,19 @@ internal class MagicStore
                     Console.WriteLine("Here is our beautiful animals !");
                     
                     // Print the available animals in the store
-                    PrintMenu(animals);
-                    break;
-                
-                case ConsoleKey.D3:
-                    Console.Clear();
-                    Console.WriteLine("Here is our misc Items !");
-                    
-                    // Print the available misc items in the store
-                    PrintMenu(misc);
+                    PrintAnimalsMenu();
                     break;
                 
                 case ConsoleKey.D2:
                     Console.Clear();
                     Console.WriteLine("Here is our beautiful wands !");
                     
-                    // Print the available wands in the store
-                    PrintMenu(wands);
+                    // Print the available wands items in the store
+                    PrintWandsMenu();
+                    
                     break;
                 
-                case ConsoleKey.D4:
+                case ConsoleKey.D3:
                     
                     //  Ensure that the Shopping cart is not empty
                     if (ShoppingCart.Count > 0)

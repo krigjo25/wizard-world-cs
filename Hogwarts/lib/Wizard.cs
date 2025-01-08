@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 namespace Hogwarts.lib;
 
-public class Wizard
+internal class Wizard : IEnumerable
 {
     // Class members
     private int _lvl;
@@ -27,7 +28,7 @@ public class Wizard
     
     private List<Gear> Gears = [];
     public List<Animal> Animals { get; set; }
-    public List<Items> Inventory { get; set; }
+    public List<Item> Inventory { get; set; }
     //public List<Spells> Spellbook { get; set; }
 
     public Wizard(string name, int gold, Wand wand = null, int lvl = 1)
@@ -56,26 +57,23 @@ public class Wizard
     }
     public void DeEquipGear(Gear gear)
     {
-        foreach (var item in Inventory)
+        foreach (var item in Inventory.Where(item => item.Name == gear.Name))
         {
-            if (item.Name == gear.Name)
+            gear.IsEquipped = true;
+            if (Armour - gear.Armour >= 0)
             {
-                gear.IsEquipped = true;
-                if (Armour - gear.Armour >= 0)
-                {
-                    Console.WriteLine($"Wears off the {gear.Name}");
-                    return;
-                }
-                Armour -= gear.Armour;
+                Console.WriteLine($"Wears off the {gear.Name}");
+                return;
             }
+            Armour -= gear.Armour;
         }
     }
     
-    public void AddToInventory(Items obj)
+    public void AddToInventory(Item obj)
     {
         Inventory.Add(obj);
     }
-    public void RemoveFromInventory(Items obj)
+    public void RemoveFromInventory(Item obj)
     {
         Inventory.Remove(obj);
     }
@@ -104,8 +102,8 @@ public class Wizard
             }
             Console.WriteLine(item);
         }
+        
         //Console.WriteLine($"House: {_house}");
         //Console.WriteLine($"BackStory: {_description}");
     }
-    
 }

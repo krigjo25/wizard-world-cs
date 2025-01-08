@@ -6,79 +6,50 @@ public interface IItems
     public string Name { get; set; }
     public string Type { get; set; }
     public int Rarity { get; set; }
-    public string Description { get; set; }
+    //public string Description { get; set; }
 
 }
 
-public class Items : IItems
+public class Item : IItems
 {
     private int _count;
     private int _rarity;
     private string _name;
     private string _type;
     private string _description;
+
+
+    public int Rarity
+    {
+        get => _rarity;
+        set => _rarity = value;
+    }
+
+    public string Name
+    {
+        get => _name;
+        set => _name = value;
+    }
+
+    public string Type
+    {
+        get => _type;
+        set => _type = value;
+    }
+
     
 
-    public int Rarity { get; set; }
-    public string Name { get; set; }
-    public string Type { get; set; }
-
-    public int PurchasePrice { get; set; }
-    public string Description { get; set; }
-
-    protected Items(string name, string type, string description = "", int rarity = 0)
+    public Item(string name, string type, string description = "", int rarity = 0)
     {
-        _name = name;
+        Name = name;
         _type = type;
-        _description = description;
         _rarity = rarity;
+        _description = description;
     }
+    
 }
 
-internal class Animal : Items
-    {
-        //private string Race { get; set; }
-        
-        public Animal(string name, string type, int rarity = 0, string description = "") :
-            base(name, type, description, rarity)
-        {
-
-        }
-        
-        public virtual void SendMessage()
-        {
-            if (Name == "Owl")
-            {
-                // Send Message
-            }
-
-        }
-        public virtual void SendSound()
-        {
-            if (Name == "Owl")
-            {
-                Console.WriteLine("Hoot Hoot");
-            }
-            else if (Name == "Rat")
-            {
-                Console.WriteLine("Squeak Squeak");
-            }
-            else if (Name == "Cat")
-            {
-                Console.WriteLine("Meow Meow");
-            }
-            else if (Name == "Toad")
-            {
-                Console.WriteLine("Croak Croak");
-            }
-        }
-        public virtual void Transport(Wizard student)
-        {
-            // Transport the student
-        }
-    }
-
-internal class Wand : Items
+public class Wand : Item
     {
         public Wand(string name, string type,  int rarity = 0, string description = "") :
             base(name, type, description, rarity)
@@ -87,12 +58,9 @@ internal class Wand : Items
         
     }
 
-internal class GeneralStore : Items
+internal class GeneralStore : Item
 {
     private int _count;
-    private int _rarity;
-    private string _name;
-    private string _type;
     private int _purchasePrice;
     private string _description;
 
@@ -117,11 +85,10 @@ internal class GeneralStore : Items
         }
     }
 
-    public int Rarity { get; set; }
-    public string Name { get; set; }
-    public string Type { get; set; } 
-    public int PurchasePrice { get; set; }
-    public string Description { get; set; }
+    public int PurchasePrice
+    {
+        get => _purchasePrice;
+    }
     
     
     // List of Items in the store
@@ -131,14 +98,10 @@ internal class GeneralStore : Items
     public GeneralStore(int purchasePrice, string name, string type, int rarity = 1, int count = 1, string description = "") : base(name, type, description, rarity)
     {
         _count = count;
-        _rarity = rarity;
-        _name = name;
-        _type = type;
         _purchasePrice = purchasePrice;
-        _description = description;
     }
     
-    public void AddItem(Items item)
+    public void AddItem(Item item)
     {
         switch (item)
         {
@@ -153,7 +116,7 @@ internal class GeneralStore : Items
         }
     }
     
-    private void RemoveItem(Items item)
+    private void RemoveItem(Item item)
     {
         switch (item)
         {
@@ -169,7 +132,7 @@ internal class GeneralStore : Items
     }
 }
 
-public class Gear : Items
+public class Gear : Item
 {
     private int _rarity;
     private string _name;
