@@ -1,4 +1,6 @@
-namespace Hogwarts.lib;
+
+
+namespace wizardWorld.lib;
 
 public interface ISpells
 {

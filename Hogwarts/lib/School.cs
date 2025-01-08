@@ -1,4 +1,4 @@
-namespace Hogwarts.lib;
+namespace wizardWorld.lib;
 
 public class School
 {

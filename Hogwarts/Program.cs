@@ -1,17 +1,17 @@
-﻿using Hogwarts.lib;
+﻿using wizardWorld.lib;
 
 internal class ConsoleAPP
 {
     public static void Main(string[] args)
     {
  
-        List<Wizard> students = [];
+        List<Wizard> Wizards = [];
         
         var ms = new MagicStore();
         
-        var pupil = new Wizard( "Ronald Kolerius Wiltersen",1000);
+        var wizard = new Wizard( "Ronald Kolerius Wiltersen",1000);
         
-        students.Add(pupil);
+        Wizards.Add(wizard);
         
         //  A console to do something
         
@@ -19,7 +19,7 @@ internal class ConsoleAPP
         
         
         // Print the student
-        foreach (var student in students)
+        foreach (var student in Wizards)
         {
             // Dette er et objekt
             Console.WriteLine(student);
@@ -29,7 +29,7 @@ internal class ConsoleAPP
             
         }
         
-        ms.PrintWelcomeMessage(pupil);
+        ms.PrintWelcomeMessage(wizard);
 
     }
 }
