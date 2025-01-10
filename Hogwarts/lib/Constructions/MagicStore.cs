@@ -1,6 +1,9 @@
+//  Libraries used for the program 
+using wizardWorld.lib;
 using wizardWorld.lib.Items;
-
-namespace wizardWorld.lib;
+using wizardWorld.lib.Characters;
+using wizardWorld.lib.Constructions;
+namespace wizardWorld.lib.Constructions;
 
 internal class MagicStore
 {
