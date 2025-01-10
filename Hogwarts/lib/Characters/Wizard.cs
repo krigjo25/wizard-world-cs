@@ -2,7 +2,7 @@
 using wizardWorld.lib.Items;
 
 
-namespace wizardWorld.lib;
+namespace wizardWorld.lib.Characters;
 
 internal record Wizard
 {

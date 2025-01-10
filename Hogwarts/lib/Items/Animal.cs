@@ -1,4 +1,5 @@
-// Libraries used within the project
+//  Libraries used for the program 
+using wizardWorld.lib.Characters;
 
 namespace wizardWorld.lib.Items;
 

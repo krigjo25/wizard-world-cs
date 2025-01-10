@@ -1,6 +1,6 @@
 
 
-namespace wizardWorld.lib;
+namespace wizardWorld.lib.Spells;
 
 public interface ISpells
 {

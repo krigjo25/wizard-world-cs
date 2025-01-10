@@ -1,4 +1,4 @@
-namespace wizardWorld.lib;
+namespace wizardWorld.lib.Constructions;
 
 public class School
 {

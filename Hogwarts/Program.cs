@@ -1,4 +1,8 @@
-﻿using wizardWorld.lib;
+﻿//  The program is a prototype of a console application that will simulate a wizard world
+//  Libraries used for the program 
+using wizardWorld.lib;
+using wizardWorld.lib.Characters;
+using wizardWorld.lib.Constructions;
 
 internal class ConsoleAPP
 {
@@ -18,7 +22,7 @@ internal class ConsoleAPP
         
         
         
-        // Print the student
+        // Print the students
         foreach (var student in Wizards)
         {
             // Dette er et objekt

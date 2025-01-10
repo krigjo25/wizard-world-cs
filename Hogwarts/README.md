@@ -1,8 +1,10 @@
 # Wizard World
-The project is not finished
-This is a Console project which was created through multiple 1:1  session with [martininn](https://github.com/martininn)
-At [GetAcademy](https://getacademy.no)
+A world of wizards, magic and spells. 
+This is a console application where you can create a character, 
+buy items, send letters and cast spells.
 
+This is a Console project which was started through multiple couple programming sessions with [martininn](https://github.com/martininn)
+At [GetAcademy](https://getacademy.no).
 
 ## Requirements
 - Visual Studio 2019 > / Rider 2020.3 >
@@ -10,7 +12,7 @@ At [GetAcademy](https://getacademy.no)
 
 ## Installation
 1. Clone the repository
-2. ```shell
+```shell
    #  Using SSH
    git@github.com:krigjo25/console-wizardworld-cs.git
    
@@ -20,9 +22,8 @@ At [GetAcademy](https://getacademy.no)
    #  Using the Terminal
    git clone https://github.com/krigjo25/console-wizardWorld-cs
    ```
-3. Open the project in Visual Studio / Ryder
-4. Run the project
-5. Done!
+2. Open the project in Visual Studio / Ryder
+3. Run the project
 
 ### Example
 ```txt
@@ -119,17 +120,9 @@ Student can read.
 - Visual Studio 2019 > / Rider 2020.3 >
 - .NET Core 8.0
 
-## Installation
-1. Clone the repository
-2. ```shell script
-   git clone https://github.com/krigjo25/Console-Organtransplant-cs
-   ```
-3. Open the project in Visual Studio
-4. Run the project
-5. Done!
-
 ## License
-This application is under [GNU v.3](./LICENCE)
+Not licenced for public use,
+only for educational purposes.
 
 ## Notes from the developer
 Created with love for programming, thanks for reading.
