@@ -2,10 +2,13 @@ namespace wizardWorld.lib.Items;
 
 internal class GeneralStore : Item
 {
+    private int _id;
     private int _count;
+    private string _itemType;
     private int _purchasePrice;
     private string _description;
 
+    public int ID => _id;
     public int Count
     {
         get => _count;
@@ -31,16 +34,24 @@ internal class GeneralStore : Item
     {
         get => _purchasePrice;
     }
+    public string ItemType
+    {
+        get => _itemType;
+    }
+
     
-    
+
     // List of Items in the store
     public readonly List<Baton> Wands = [];
     public readonly List<Animal> Animals = [];
     
-    public GeneralStore(int purchasePrice, string name, string type, int rarity = 1, int count = 1, string description = "") : base(name, type, description, rarity)
+    public GeneralStore(int id, int purchasePrice, string name, string type, string itemType, int rarity = 1, int count = 1, string description = "") : base(name, type, description, rarity)
     {
+        _id = id;
         _count = count;
+        _itemType = itemType;
         _purchasePrice = purchasePrice;
+
     }
     
     public void AddItem(Item item)
@@ -72,4 +83,5 @@ internal class GeneralStore : Item
             
         }
     }
+    
 }
