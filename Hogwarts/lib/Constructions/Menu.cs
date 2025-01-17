@@ -6,7 +6,7 @@ namespace wizardWorld.lib.Constructions;
 
 public class Menu
 {
-    private readonly Wizard _wizard;
+    private readonly Wizard? _wizard;
     private readonly Konsole _konsole = new Konsole();
     private readonly Store _store;
 

@@ -29,7 +29,7 @@ public class Animal: Item
         // Send the sound
     }
     
-    public void SendMessage(Wizard? from, Wizard? to)
+    public void SendMessage(Student? from, Student? to)
     {
         if (from == null || to == null)
         {
@@ -61,7 +61,7 @@ public class Animal: Item
         }
     }
 
-    public virtual void Transport(Wizard student)
+    public virtual void Transport(Student student)
     {
         // Transport the student
     }

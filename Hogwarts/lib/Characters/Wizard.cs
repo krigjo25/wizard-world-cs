@@ -4,7 +4,7 @@ using wizardWorld.lib.Items;
 
 namespace wizardWorld.lib.Characters;
 
-public record Wizard
+public class Wizard
 {
     
     // Class members
@@ -17,7 +17,6 @@ public record Wizard
     // List of personal equipment
     private Baton _wand;
     private Animal _pet;
-    private object _house;
     
     
     // Properties
@@ -35,12 +34,7 @@ public record Wizard
         }
     }
 
-    public object House
-    {
-        get => _house;
-        set => _house = value;
-    }
-
+    
     public int Level
     {
         get => _lvl; 
@@ -77,7 +71,7 @@ public record Wizard
     public List<Item> Inventory = [];
     //public List<Spells> Spellbook { get; set; }
 
-    public Wizard(string name, int gold, int lvl = 1, Baton? wand = null, Animal? pet = null, object? house = null)
+    public Wizard(string name, int gold, int lvl = 1, Baton? wand = null, Animal? pet = null)
     {
         _ap = 0;
         _hp = 100;
@@ -86,7 +80,6 @@ public record Wizard
         _name = name;
         _wand = wand;
         _gold = gold;
-        _house = house;
         Inventory = [];
         
     }
