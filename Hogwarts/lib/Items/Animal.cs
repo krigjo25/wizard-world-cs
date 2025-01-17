@@ -3,7 +3,7 @@ using wizardWorld.lib.Characters;
 
 namespace wizardWorld.lib.Items;
 
-internal class Animal: Item
+public class Animal: Item
 {
     //private string Race { get; set; }
     private string _organism;

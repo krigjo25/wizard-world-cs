@@ -63,4 +63,21 @@ public class Konsole
             Environment.Exit(0);
         }
     }
+    
+    public ConsoleKeyInfo ReadKeyNumeric(bool arg = false)
+    {
+        var input = Console.ReadKey(true);
+        
+        //  Check if the user wants to exit the program
+        Exit(input.Key);
+        
+        if (input.Key is ConsoleKey.L && arg)
+        { ;
+            return input;
+        }
+        //  Check if the user input is a number
+        NumericError(input.KeyChar.ToString());
+
+        return input;
+    }
 }

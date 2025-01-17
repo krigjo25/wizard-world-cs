@@ -4,7 +4,7 @@ using wizardWorld.lib.Items;
 
 namespace wizardWorld.lib.Characters;
 
-internal record Wizard
+public record Wizard
 {
     
     // Class members

@@ -3,9 +3,11 @@
 using wizardWorld.lib;
 using wizardWorld.lib.Characters;
 using wizardWorld.lib.Constructions;
+using wizardWorld.lib.TextWeaver;
 
 internal class ConsoleAPP
 {
+    
     public static void Main(string[] args)
     {
         //  A list of wizards
@@ -16,13 +18,12 @@ internal class ConsoleAPP
         var wizard = new Wizard( "Ronald Kolerius Wiltersen",1000);
         
         //  Initializing a magic store
-        var ms = new MagicStore(wizard);
+        var ms = new Store(wizard);
         Wizards.Add(wizard);
         
         //  Introduce the user to the wizard world
-        
-        // Print the students
 
+        //  Intro
         ms.PrintWelcomeMessage();
         
         //  Proceeds to the School of Magic
@@ -30,5 +31,15 @@ internal class ConsoleAPP
         // At the School of Magic
         
 
+    }
+
+    public static void GameIntroduction()
+    {
+        Konsole konsole = new Konsole();
+    
+        konsole.TypeEffect("Once upon a time...", 75);
+        Thread.Sleep(50);
+        konsole.TypeEffect("In a distant land", 75);
+        
     }
 }
