@@ -8,19 +8,17 @@ internal class ConsoleAPP
 {
     public static void Main(string[] args)
     {
- 
+        //  A list of wizards
         List<Wizard> Wizards = [];
         
-        var ms = new MagicStore();
-        
+        //  Initializing a wizard
         var wizard = new Wizard( "Ronald Kolerius Wiltersen",1000);
         
+        //  Initializing a magic store
+        var ms = new MagicStore(wizard);
         Wizards.Add(wizard);
         
         //  A console to do something
-        
-        
-        
         
         // Print the students
         foreach (var student in Wizards)
@@ -33,7 +31,7 @@ internal class ConsoleAPP
             
         }
         
-        ms.PrintWelcomeMessage(wizard);
+        ms.PrintWelcomeMessage();
 
     }
 }

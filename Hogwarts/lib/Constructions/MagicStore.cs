@@ -1,8 +1,6 @@
 //  Libraries used for the program 
-using wizardWorld.lib;
 using wizardWorld.lib.Items;
 using wizardWorld.lib.Characters;
-using wizardWorld.lib.Constructions;
 using wizardWorld.lib.TextWeaver;
 
 namespace wizardWorld.lib.Constructions;
@@ -10,8 +8,9 @@ namespace wizardWorld.lib.Constructions;
 internal class MagicStore
 {
     string[] wands = ["unicorn wand", "troll wand", "phoenix wand"];
-    
-    Konsole konsole = new Konsole();
+
+    private readonly Konsole _konsole = new Konsole();
+    private readonly Wizard _wizard;
     
     // List of items in the store
     private List<Baton> Wands = [];
@@ -19,10 +18,11 @@ internal class MagicStore
     private List<GeneralStore> StoreProduct = [];
     private List<GeneralStore> ShoppingCart { get; } = [];
 
-    public MagicStore()
+    public MagicStore(Wizard wizard)
     {
         InitializeProducts();
         Console.WriteLine("Initialized!");
+        _wizard = wizard;
     }
     
     private void InitializeProducts()
@@ -32,11 +32,6 @@ internal class MagicStore
         Animals.Add(new Animal("Cat",  1));
         Animals.Add(new Animal("Rat", 1));
         Animals.Add(new Animal("Toad", 1));
-
-        foreach (var element in Animals)
-        {
-            Console.WriteLine($"Animal: {element.Organism} Type: {element.Type} Rarity: {element.Rarity}");
-        }
         
         foreach (var wand in wands)
         {
@@ -72,7 +67,7 @@ internal class MagicStore
         // Available misc items in the store
     }
     
-    private void Checkout(Wizard wizard)
+    private void Checkout()
     {
         string[] array =
         [
@@ -83,142 +78,193 @@ internal class MagicStore
         
         Console.Clear();
 
-        konsole.WriteLine("Looking at the items in your shopping cart !");
-        Console.WriteLine();
+        _konsole.TypeEffect("Before you exit the store, you take a look at the items in the shopping cart.");
         foreach (var element in ShoppingCart)
         {
-            konsole.WriteLine($"Item: {element.Name} Type: {element.Type} Rarity: {element.Rarity} Price: {element.PurchasePrice}");
+            _konsole.WriteLine($"Item: {element.Name} Type: {element.Type} Rarity: {element.Rarity} Price: {element.PurchasePrice}");
         }
-        Console.WriteLine("A thought arises in your mind, what would I like to do with the items in the shopping cart?!");
+        
+        _konsole.TypeEffect("A thought arises in your mind, what would I like to do with the items in the shopping cart?!");
         
         for (var i = 0; i < array.Length; i++)
         {
             var txt = array[i];
-            konsole.TypeEffect($"Press {i} {array[i]}");
+            _konsole.TypeEffect($"Press {i+1} To {array[i]}");
         }
         
         var input = Console.ReadKey();
-        konsole.WriteLine("As you took an decision, you started to walk towards the Sales repesenative");
+        _konsole.WriteLine("As you took an decision, you started to walk towards the exit");
+        
         switch (input.Key)
         {
-            
             case ConsoleKey.D1:
-                PurchaseItem(wizard);
+                _konsole.TypeEffect("As you're walking towards the exit you stop, and turn your face towards the sales representive.\nThe Sales repesentive faces towards you, and asks");
+                _konsole.TypeEffect("The Sales repesentive : Greetings, How can i provide my services for you today?\n Would you like to sell your items?, Would you like to Purchase an item?");
+                _konsole.TypeEffect($"{_wizard.Name} : I would like to purchase the items in the shopping cart");
+                
+                SellItem();
                 return;
             
             case ConsoleKey.D2:
-                StealItem(wizard);
+                _konsole.TypeEffect("As you're walking towards the exit you stop, for a second, and turns around to see if the Shopkeeper is watching you, and then you proceed to walk out of the store");
+                StealItem();
                 return;
             
             case ConsoleKey.D3:
                 
-                if (wizard.Inventory.Count == 0)
+                _konsole.TypeEffect("As you're walking towards the exit you stop, and turn your face towards the sales representive.\nThe Sales repesentive faces towards you, and asks");
+                _konsole.TypeEffect("The Sales repesentive : Greetings, How can i provide my services for you today?\n Would you like to sell your items?, Would you like to Purchase an item?");
+                
+                // Ensure that the wizards inventory is empty
+                if (_wizard.Inventory.Count == 0)
                 {
-                    Console.WriteLine("There is no items in the inventory to sell !");
-                    SellItem(wizard);
-                    break;
+                    _konsole.TypeEffect("You open up your inventory, and realizes that you do not have anything to sell the Sales repesentive !");
+
                 }
-                
-                
-                return;
+                else
+                {
+                    PurchaseItem();
+                }
+                break;
             
         }
-        Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
         
         // Sell item to the Customer
-        foreach (var element in ShoppingCart)
+        foreach (var element in ShoppingCart.Where(element => _wizard.Gold <= element.PurchasePrice))
         {
-            if (wizard.Gold <= element.PurchasePrice)
-            {
-                wizard.Inventory.Add(element);
-            }
+            _wizard.Inventory.Add(element);
         }
+        
+        _konsole.TypeEffect("As you've finished the transaction, you hear\nthe sales repesentive says : Thank you for the purchase, welcome back !");
         Console.WriteLine("Thank you for using the MagicStore !");
     }
-    private void SellItem(Wizard wizard)
+    private void SellItem()
     {
-        Console.Clear();
-        Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
-        Console.WriteLine("Are you sure you would like to purchase items in your shopping cart?!");
+        _konsole.CleanConsole();
+        
+        int n = 0;
+        
+        // Calculate the price for the items
+        foreach (var element in ShoppingCart)
+        {
+            n += element.PurchasePrice;
+        }
+        
+        _konsole.TypeEffect($"The Sales representive : That would be {n} Gold, would you like to proceed?");
+        _konsole.TypeEffect($"{_wizard.Name} take a look at his Gold purse, and {_wizard.Name} put his hand inside the Gold purse");
+        
+        if (_wizard.Gold > 0)
+        {
+            _konsole.TypeEffect($"{_wizard.Name} sense the gold pieces towards his hand, and {_wizard.Name} start counting the gold pieces");
+            _konsole.TypeEffect($"{_wizard.Name} counted {_wizard.Gold} Gold pieces");
+            if (_wizard.Gold >= n)
+            {
+                _konsole.TypeEffect($"{_wizard.Name} counted {_wizard.Gold} Gold pieces");
+            }
+            else
+            {
+                _konsole.TypeEffect($"{_wizard.Name} do not have enough gold to purchase the items in the shopping cart");
+                return;
+            }
+        }
+        else
+        {
+            _konsole.TypeEffect($"{_wizard.Name} put his hand inside the Gold purse, and {_wizard.Name} realize that the Gold purse is empty");
+            return;
+        }
+        
         var input = Console.ReadLine().ToLower();
+        _konsole.TypeEffect($"{_wizard.Name} : {input.ToUpperInvariant()}");
         
         if (input is "yes" or "y")
         {
-            foreach (var element in ShoppingCart.Where(element => wizard.Gold <= element.PurchasePrice))
+            if (_wizard.Gold >= n)
             {
-                wizard.Inventory.Add(element);
-                wizard.Gold -= element.PurchasePrice;
+                foreach (var element in ShoppingCart.Where(element => _wizard.Gold <= element.PurchasePrice))
+                {
+                    _wizard.Inventory.Add(element);
+                    _wizard.Gold -= element.PurchasePrice;
+                }
+            }
+            else
+            {
+                _konsole.TypeEffect("The Sales representive : I'm sorry, you do not have enough gold to purchase the items in the shopping cart");
             }
         }
+
     }
-    private void StealItem(Wizard wizard)
+    
+    private void StealItem()
     {
-        // Sucsess rate
-        var decrease = (decimal)(10.1 * ShoppingCart.Count / 100.0);
-        
-        // Ranomize a boolean value
-        
-        
-        if(true)
+        if(CalculateRate())
         {
-            string [] array = [
-                "As suspicious you are, you turn your face towards the sales representive, and wish him a beautiful day further.",
-                "Thank you said the representive, have a beautiful  day !",
-                "[ ! ] The representive did not notice you, as you walked out of the store with the items [ ! ]"
-            ];
-            foreach (var element in array)
-            {
-                konsole.TypeEffect(element);
-            }
             
             foreach (var element in ShoppingCart)
             {
                 
-                wizard.Inventory.Add(element);
+                _wizard.Inventory.Add(element);
             }
             
         }
         else
         {
-            int n = new Random().Next(0, 3);
-            string [] array = [
-                "As you were about to exit the store, the store owner notices your suspicious behavior",
-                "As you were about to exit the store, the store owner notices a suspicious Clump in your sweater",
-                "As suspicious you are, you turn your face towards the sales representive, and wish him a beautiful day further.",
-                "Thank you said the representive, have a beautiful  day !",
-                "[ ! ] The representive did not notice you, as you walked out of the store with the items [ ! ]"
-                ];
-            konsole.TypeEffect(array[n]);
-            //konsole.TypeEffect($" {student.House.proffesor} : {student.House} lost 200points !\nThis is not acceptable behavior !");
-            //student.House.Points -= 200;
-        }
-        Console.WriteLine("You went out of the store undetected !");
-        konsole.CleanConsole();
-    }
-    private void PurchaseItem(Wizard wizard, int price = 30)
-    {
-        Console.WriteLine("Welcome to the MagicStore CheckOutPoint !");
 
-        Console.WriteLine("What would you like to sell?!");
-        Console.WriteLine("-s <name> to sell an item");
-        Console.WriteLine("-i to view your inventory");
+            _konsole.TypeEffect($"As {_wizard.Name} were caught stealing, the store owner notified the School about the behavior");
+            //konsole.TypeEffect($" {wizard.House.proffesor} : {wizard.House} lost 200points !\nThis is not acceptable behavior !"); 
+            //wizard.House.Points -= 200;
+        }
+        _konsole.WriteLine($"As {_wizard.Name} passed by the store owner, {_wizard.Name} went out of the store undetected!");
+        _konsole.CleanConsole();
+    }
+    private bool CalculateRate()
+    {
+        //  Randomize a boolean value
+        bool caught = false;
         
+        //  Fetch percentage of decrement 
+        var decrease = (decimal)(10.1 * ShoppingCart.Count / 100.0);
+        
+        //  Randomize a number based on the percentage
+        
+        //  Initializing an array of strings
+        string [] array = [
+            $"As suspicious as {_wizard.Name} are, {_wizard.Name} turn his face towards the sales representive\n The sales representive didn't face {_wizard.Name}. and wish him a beautiful day further.",
+            $"As suspicious {_wizard.Name} are, {_wizard.Name} turn his face towards the sales representive\n The sales representive did face {_wizard.Name} and wish him a beautiful day further.",
+            $"As {_wizard.Name} were about to exit the store, the store owner notices his suspicious behavior",
+            $"As {_wizard.Name} were about to exit the store, the store owner notices a suspicious Clump in his sweater",
+        ];
+        
+        // Randomize a number
+        int n = new Random().Next(0, array.Length);
+
+        var text = array[n];
+
+        Random random = new Random();
+        
+        if (caught)
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    private void PurchaseItem(int price = 30)
+    {
         var input = Console.ReadLine();
         
         // Switch statement to handle the user input
-
         switch (input)
         {
             case "-i":
-                wizard.PrintInventory();
+                _wizard.PrintInventory();
                 break;
             
             case "-s":
                 var itemName = input.Split(" ")[1];
-                foreach (var element in wizard.Inventory.Where(i => i.Name == itemName))
+                foreach (var element in _wizard.Inventory.Where(i => i.Name == itemName))
                 {
-                    wizard.RemoveFromInventory(element);
-                    wizard.Gold += element.Rarity * price;
+                    _wizard.RemoveFromInventory(element);
+                    _wizard.Gold += element.Rarity * price;
                 }
                 break;
             
@@ -243,78 +289,101 @@ internal class MagicStore
     {
         while (true)
         {
-
-            // Print the available items in the store
+            _konsole.TypeEffect($"As {_wizard.Name} proceed to the {type} section, {_wizard.Name} takes a look at the available items in the section");
+            _konsole.WriteLine("");
+            
+            //  Print the available items in the store
             foreach (var element in StoreProduct.Where(element => element.ItemType == type))
             {
-                Console.WriteLine($"Press {element.ID} to add a(n) {element.Name} to the shoppingCart");
+                _konsole.TypeEffect($"{element.Name} Price tag: {element.PurchasePrice} Gold, Rarity: {element.Rarity}");
+            }
+            _konsole.WriteLine("");
+
+            // Print the available options in the store
+            foreach (var element in StoreProduct.Where(element => element.ItemType == type))
+            {
+                _konsole.TypeEffect($"Press {element.ID} to add a(n) {element.Name} to the shoppingCart.");
             }
 
-            Console.WriteLine("Press ESC or Q to exit");
+            _konsole.TypeEffect("Press ESC or Q to exit\n Press L to go back to the previous section");
+            _konsole.WriteLine("");
 
             // Prompt the user to select an option
             var input = Console.ReadKey();
-
+            
             // Ensures that the key pressed is ESC or Q
-            if (input.Key is ConsoleKey.Escape or ConsoleKey.Q) return;
-
-            // Ensures that the key pressed is a number
-            if (!int.TryParse(input.KeyChar.ToString(), out var n)) return;
-
-            //  Converting the key pressed to an integer
-            var i = int.Parse(input.KeyChar.ToString());
+            _konsole.Exit(input.Key);
+           
+            if (input.Key == ConsoleKey.L)
+            {
+                return;
+            }
+            
+            //  Ensures that the key pressed is a number
+            _konsole.NumericError(input.KeyChar.ToString());
 
             // Add the selected item to the shopping cart
-            foreach (var element in StoreProduct.Where(element => element.ID == i))
+            foreach (var element in StoreProduct.Where(element => element.ID == int.Parse(input.KeyChar.ToString())).ToList())
             {
 
                 // Add the selected item to the shopping cart
                 ShoppingCart.Add(element);
-                Console.Clear();
-                Console.WriteLine($"Added A {element.Name} to the shopping cart");
+                _konsole.WriteLine("");
+                _konsole.TypeEffect($"Added A {element.Name} to the shopping cart");
+                
+                //  Remove the element from the section
+                StoreProduct.Remove(element);
             }
         }
     }
     
-    public void PrintWelcomeMessage(Wizard wizard)
+    public void PrintWelcomeMessage()
     {
         string[] entry = ["Animal", "Wizard Wand", "Check out"];
         while (true)
         {
-            Console.Clear();
-            Console.WriteLine("Welcome to the MagicStore !");
+            _konsole.CleanConsole();
+            
+            if (ShoppingCart.Count > 0)
+            {
+                _konsole.TypeEffect($"As {_wizard.Name} went away from the section, {_wizard.Name} take another look around, and decides whether to checkout or proceed to another section in the store.");
+            }
+            else
+            {
+                _konsole.TypeEffect($"As {_wizard.Name} enter the store, {_wizard.Name} stop for a second, and take a look around the store");
+            }
             
             // Print the available items in the store
             for (int i = 0; i < entry.Length; i++)
             {
-                Console.WriteLine(i % 3 == 0 && i+1 != 1? $"Press {i + 1} to proceed to {entry[i]} ." : $"Press {i + 1} to proceed to  {entry[i]} Section");
+                _konsole.TypeEffect(i % 3 == 0 && i+1 != 1? $"Press {i + 1} to proceed to {entry[i]} ." : $"Press {i + 1} to proceed to  {entry[i]} Section");
             }
-            Console.WriteLine("Press ESC / q to exit");
+            _konsole.TypeEffect("Press ESC / q to exit");
             
             // Prompt the user to select an option
             var input = Console.ReadKey();
 
             // Ensures that the key pressed is ESC or Q
-            if (input.Key is ConsoleKey.Escape or ConsoleKey.Q)
+            switch (input)
             {
-                return;
+                
             }
+            _konsole.Exit(input.Key);
+            
+            //  Ensures that the key pressed is a number
+            _konsole.NumericError(input.KeyChar.ToString());
             
             // Switch statement to handle the user input
             switch (input.Key)
             {
                 
                 case ConsoleKey.D1:
-                    //Console.Clear();
-                    Console.WriteLine("Here is our beautiful animals !");
                     
                     // Print the available animals in the store
                     PrintMenu("Animal");
                     break;
                 
                 case ConsoleKey.D2:
-                    Console.Clear();
-                    Console.WriteLine("Here is our beautiful wands !");
                     
                     // Print the available wands items in the store
                     PrintMenu("Wand");
@@ -326,14 +395,14 @@ internal class MagicStore
                     //  Ensure that the Shopping cart is not empty
                     if (ShoppingCart.Count > 0)
                     {
-                        Console.Clear();
+                        _konsole.CleanConsole();
                         
                         // Checkout the items in the shopping cart
-                        Checkout(wizard);
+                        Checkout();
                         return;
                     }
                     
-                    Console.WriteLine("You have no items in your shopping cart !");
+                    Console.WriteLine($"{_wizard.Name} have no items in your shopping cart !");
                     break;
                 
                 default:
