@@ -76,7 +76,7 @@ internal class MagicStore
             "Sell the items in the Inventory"
         ];
         
-        Console.Clear();
+        _konsole.CleanConsole();
 
         _konsole.TypeEffect("Before you exit the store, you take a look at the items in the shopping cart.");
         foreach (var element in ShoppingCart)
@@ -136,7 +136,6 @@ internal class MagicStore
         }
         
         _konsole.TypeEffect("As you've finished the transaction, you hear\nthe sales repesentive says : Thank you for the purchase, welcome back !");
-        Console.WriteLine("Thank you for using the MagicStore !");
     }
     private void SellItem()
     {
@@ -156,20 +155,19 @@ internal class MagicStore
         if (_wizard.Gold > 0)
         {
             _konsole.TypeEffect($"{_wizard.Name} sense the gold pieces towards his hand, and {_wizard.Name} start counting the gold pieces");
-            _konsole.TypeEffect($"{_wizard.Name} counted {_wizard.Gold} Gold pieces");
             if (_wizard.Gold >= n)
             {
                 _konsole.TypeEffect($"{_wizard.Name} counted {_wizard.Gold} Gold pieces");
             }
             else
             {
-                _konsole.TypeEffect($"{_wizard.Name} do not have enough gold to purchase the items in the shopping cart");
+                _konsole.TypeEffect($"{_wizard.Name} counted {_wizard.Gold} Gold pieces, but realized its was not enough pieces to purchase the items.");
                 return;
             }
         }
         else
         {
-            _konsole.TypeEffect($"{_wizard.Name} put his hand inside the Gold purse, and {_wizard.Name} realize that the Gold purse is empty");
+            _konsole.TypeEffect($"{_wizard.Name} realize that the Gold purse is empty");
             return;
         }
         
@@ -287,9 +285,20 @@ internal class MagicStore
 
     private void PrintMenu(string type)
     {
+        _konsole.CleanConsole();
         while (true)
         {
-            _konsole.TypeEffect($"As {_wizard.Name} proceed to the {type} section, {_wizard.Name} takes a look at the available items in the section");
+            _konsole.CleanConsole();
+            
+            if (ShoppingCart.Count > 0)
+            {
+                _konsole.TypeEffect($"{_wizard.Name} takes another look around...");
+            }
+            else
+            {
+                _konsole.TypeEffect($"As {_wizard.Name} proceed to the {type} section, {_wizard.Name} takes a look at the available items in the section");
+            }
+           
             _konsole.WriteLine("");
             
             //  Print the available items in the store
@@ -305,7 +314,7 @@ internal class MagicStore
                 _konsole.TypeEffect($"Press {element.ID} to add a(n) {element.Name} to the shoppingCart.");
             }
 
-            _konsole.TypeEffect("Press ESC or Q to exit\n Press L to go back to the previous section");
+            _konsole.TypeEffect("Press ESC or Q to exit\nPress L to go back to the previous section");
             _konsole.WriteLine("");
 
             // Prompt the user to select an option
@@ -329,7 +338,7 @@ internal class MagicStore
                 // Add the selected item to the shopping cart
                 ShoppingCart.Add(element);
                 _konsole.WriteLine("");
-                _konsole.TypeEffect($"Added A {element.Name} to the shopping cart");
+                _konsole.TypeEffect($"{_wizard.Name} Added A {element.Name} to the shopping cart");
                 
                 //  Remove the element from the section
                 StoreProduct.Remove(element);
@@ -353,7 +362,7 @@ internal class MagicStore
                 _konsole.TypeEffect($"As {_wizard.Name} enter the store, {_wizard.Name} stop for a second, and take a look around the store");
             }
             
-            // Print the available items in the store
+            // Print the available sections in the store
             for (int i = 0; i < entry.Length; i++)
             {
                 _konsole.TypeEffect(i % 3 == 0 && i+1 != 1? $"Press {i + 1} to proceed to {entry[i]} ." : $"Press {i + 1} to proceed to  {entry[i]} Section");
@@ -363,11 +372,7 @@ internal class MagicStore
             // Prompt the user to select an option
             var input = Console.ReadKey();
 
-            // Ensures that the key pressed is ESC or Q
-            switch (input)
-            {
-                
-            }
+            // Ensures that the key 3pressed is ESC or Q
             _konsole.Exit(input.Key);
             
             //  Ensures that the key pressed is a number

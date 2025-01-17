@@ -11,6 +11,7 @@ internal class ConsoleAPP
         //  A list of wizards
         List<Wizard> Wizards = [];
         
+        
         //  Initializing a wizard
         var wizard = new Wizard( "Ronald Kolerius Wiltersen",1000);
         
@@ -18,20 +19,16 @@ internal class ConsoleAPP
         var ms = new MagicStore(wizard);
         Wizards.Add(wizard);
         
-        //  A console to do something
+        //  Introduce the user to the wizard world
         
         // Print the students
-        foreach (var student in Wizards)
-        {
-            // Dette er et objekt
-            Console.WriteLine(student);
 
-            Console.WriteLine(student.Name);
-            Console.WriteLine(student.Gold);
-            
-        }
-        
         ms.PrintWelcomeMessage();
+        
+        //  Proceeds to the School of Magic
+        
+        // At the School of Magic
+        
 
     }
 }
